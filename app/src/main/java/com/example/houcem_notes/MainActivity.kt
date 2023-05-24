@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.data.NoteDataSource
 import com.example.houcem_notes.ui.theme.Houcem_NotesTheme
 import com.example.model.Note
 import com.example.screen.NoteScreen
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Houcem_NotesTheme {
 
-                NoteScreen(notes= emptyList<Note>(),
+                NoteScreen(notes= NoteDataSource().loadNotes(),
                     onAddNote = {},
                     onRemoveNote = {}
                 )
