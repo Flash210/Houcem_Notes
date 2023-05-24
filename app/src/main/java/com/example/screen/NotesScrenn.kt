@@ -1,5 +1,6 @@
 package com.example.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.componets.NoteButton
@@ -56,6 +58,8 @@ fun NoteScreen(
 
         // Content of the column
 
+        val context = LocalContext.current
+
         Column(modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
 
@@ -90,8 +94,11 @@ fun NoteScreen(
                 onClick = {
                     if (title.isNotEmpty() && description.isNotEmpty())
                     {
+                        onAddNote(Note(title=title,description=description))
                         title=""
                         description=""
+
+                        Toast.makeText(context,"Add it ! :)",Toast.LENGTH_LONG).show()
                     }
 
                 })
@@ -103,7 +110,11 @@ fun NoteScreen(
 
             items(notes){note->
 
-          NoteRow(note = note, onNoteClicked ={} )
+          NoteRow(note = note,
+              onNoteClicked ={
+                  onRemoveNote(note)
+
+          } )
             }
         }
 
@@ -128,7 +139,7 @@ fun NoteRow(
     ){
         Column(
             modifier
-                .clickable { }
+                .clickable { onNoteClicked(note)}
                 .padding(horizontal = 14.dp, vertical = 6.dp),
             horizontalAlignment = Alignment.Start
         ) {
